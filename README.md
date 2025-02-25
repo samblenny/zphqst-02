@@ -5,6 +5,15 @@
 
 **WORK IN PROGRESS**
 
+Plan:
+
+1. [x] 3d printed stand for breadboard and display
+2. [x] CircuitPython demo code to test display wiring
+3. [ ] Devicetree dtsi file for MIPI ST7789V display shield
+4. [ ] Some kind of Zephyr demo to demonstrate using the display
+5. [ ] Photos
+
+
 ## Getting OpenOCD for RP2350
 
 Until RP2350 support makes it into the upstream OpenOCD and downstream distro

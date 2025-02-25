@@ -29,7 +29,7 @@ grp.append(TileGrid(bg, pixel_shader=pal))
 
 # Add some text
 lbl = Label(font=FONT, color=0xFF5555,
-    text="CircuitPython\nDemo:\n Feather RP2350 \n  + ST7789",
+    text="CircuitPython\nWiring Test:\n Feather RP2350 \n  + ST7789",
     anchor_point=(0, 0),
     anchored_position=(8, 10))
 grp.append(lbl)
