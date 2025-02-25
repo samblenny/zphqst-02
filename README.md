@@ -11,7 +11,8 @@ Plan:
 2. [x] CircuitPython demo code to test display wiring
 3. [ ] Devicetree dtsi file for MIPI ST7789V display shield
 4. [ ] Some kind of Zephyr demo to demonstrate using the display
-5. [ ] Photos
+5. [ ] Fritzing diagram
+6. [ ] Photos
 
 
 ## Getting OpenOCD for RP2350
