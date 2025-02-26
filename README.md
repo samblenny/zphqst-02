@@ -12,7 +12,7 @@ Plan:
 3. [x] Devicetree overlay for Feather header to EYESPI MIPI pin mapping
 4. [ ] Devicetree overlay for MIPI ST7789V display shield with EYESPI pins
 5. [ ] Some kind of Zephyr demo to demonstrate using the display
-6. [ ] Fritzing diagram
+6. [x] Fritzing diagram
 7. [ ] Photos
 
 
