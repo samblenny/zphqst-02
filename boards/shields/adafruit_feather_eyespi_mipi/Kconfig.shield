@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: Copyright 2025 Sam Blenny
+
+config SHIELD_ADAFRUIT_FEATHER_EYESPI_MIPI
+	def_bool $(shields_list_contains,adafruit_feather_eysepi_mipi)

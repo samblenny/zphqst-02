@@ -15,6 +15,7 @@ _OPENOCD=-DOPENOCD=../openocd/build/bin/openocd
 # Build Zephyr shell for Feather RP2350 with OpenOCD and Pi Debug Probe.
 shell:
 	west build -b feather_rp2350/rp2350a/m33         \
+		--shield adafruit_feather_eyespi_mipi        \
 		../zephyr/samples/subsys/shell/shell_module/ \
 		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
 
@@ -31,9 +32,6 @@ flash:
 # in. You may need to use a different device path for other system setups.
 uart:
 	@screen -fn /dev/serial/by-id/*Pi_Debug* 115200
-
-clean-zephyr:
-	rm -rf build
 
 # If west build chokes on the dts file, it will give an uninformative numeric
 # error code instead of dtc's stderr/stdout. But, it does leave behind a
@@ -61,41 +59,29 @@ gen_edt:
 		--edt-pickle-out build/zephyr/edt.pickle.new \
 		--vendor-prefixes ../zephyr/dts/bindings/vendor-prefixes.txt
 
-
 # This is for use by .github/workflows/buildbundle.yml GitHub Actions workflow
 bundle:
 	@mkdir -p build-cp
 	python3 bundle_builder.py
-
-# Name of top level folder in project bundle zip file should match repo name
-REV_DIR = $(shell basename `git rev-parse --show-toplevel`)
-
-# Sync current code and libraries to CIRCUITPY drive on macOS.
-sync-mac: bundle
-	xattr -cr build-cp
-	rsync -rcvO 'build-cp/${REV_DIR}/CircuitPython 9.x/' /Volumes/CIRCUITPY
-	sync
 
 # On Debian, you can mount CIRCUITPY with:
 #    pmount `readlink -f /dev/disk/by-label/CIRCUITPY` CIRCUITPY
 # and unmount with:
 #    pumount CIRCUITPY
 
+# Name of top level folder in project bundle zip file should match repo name
+REV_DIR = $(shell basename `git rev-parse --show-toplevel`)
+
 # Sync current code and libraries to CIRCUITPY drive on Debian.
-sync-deb: bundle
+sync: bundle
 	rsync -rcvO 'build-cp/${REV_DIR}/CircuitPython 9.x/' /media/CIRCUITPY
 	sync
 
-# macOS serial monitor: 9999 line scrollback, no flow control, 115200 baud
-usbtty-mac:
-	screen -h 9999 -fn /dev/tty.usbmodem* 115200
-
 # Debian serial monitor: 9999 line scrollback, no flow control, 115200 baud
-usbtty-deb:
+usbtty:
 	screen -h 9999 -fn /dev/serial/by-id/usb-Adafruit_* 115200
 
-clean-cp:
-	rm -rf build-cp
+clean:
+	rm -rf build build-cp
 
-.PHONY: shell menuconfig flash uart clean dtc gen_edt
-.PHONY: bundle sync-mac sync-deb usbtty-mac usbtty-deb clean
+.PHONY: shell menuconfig flash uart dtc gen_edt bundle sync usbtty clean

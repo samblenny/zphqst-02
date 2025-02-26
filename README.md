@@ -9,10 +9,23 @@ Plan:
 
 1. [x] 3d printed stand for breadboard and display
 2. [x] CircuitPython demo code to test display wiring
-3. [ ] Devicetree dtsi file for MIPI ST7789V display shield
-4. [ ] Some kind of Zephyr demo to demonstrate using the display
-5. [ ] Fritzing diagram
-6. [ ] Photos
+3. [x] Devicetree overlay for Feather header to EYESPI MIPI pin mapping
+4. [ ] Devicetree overlay for MIPI ST7789V display shield with EYESPI pins
+5. [ ] Some kind of Zephyr demo to demonstrate using the display
+6. [ ] Fritzing diagram
+7. [ ] Photos
+
+
+## Board & shield folder name conventions
+
+When possible, folder names in this repo for boards and shields are based on
+folder names from
+[Adafruit\_CAD\_Parts](https://github.com/adafruit/Adafruit_CAD_Parts)
+with the following transformations:
+
+1. Make lowercase
+2. Change spaces to underscores
+3. Add an `adafruit_` prefix for shield folders (but not for boards)
 
 
 ## Getting OpenOCD for RP2350

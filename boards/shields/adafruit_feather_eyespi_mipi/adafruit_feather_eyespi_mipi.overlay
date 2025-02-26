@@ -1,0 +1,67 @@
+/*
+ * SPDX-License-Identifier: Apache-2.0
+ * SPDX-FileCopyrightText: Copyright 2025 Sam Blenny
+ *
+ *
+ * This maps from Feather header to EYESPI MIPI (spi + CS, DC, and RST).
+ * To use this, build with a feather board, this shield, and an EYESPI MIPI
+ * display shield.
+ *
+ * The pin mapping here is for a minimal SPI MIPI display configuration without
+ * support for the microSD slot, I2C touch input, etc.
+ *
+ * For hardware, there isn't actually a PCB that goes from Feather to EYESPI.
+ * This mapping is for connecting a Feather board to an Adafruit EYESPI
+ * Breakout (P/N 5613) with a breadboard and hookup wire, using a subset of
+ * the pinout in the EYESPI Breakout's Learn Guide.
+ *
+ * Notes on nexus node specifier mapping:
+ * 1. Many Zephyr .dts and .dtsi files appear to use 64 bits (#gpio-cells=<2>)
+ *    to specify gpio indexes for header pinouts that typically have well
+ *    under 100 pins. This results in a lot of gpio-map table entries where
+ *    the second item is `0` (e.g. `<$FOO 0 $BAR ...>,`). It seems like using
+ *    32 bits (#gpio-cells=<1>) should be adequate.
+ * 2. It appears as though, the commonly specified values of gpio-map-mask and
+ *    gpio-map-pass-thru have been copied and pasted a lot because the relevant
+ *    documentation is so difficult to find. By my reading of the relevant
+ *    devicetree docs, it should be fine to use the default mask and pass-thru
+ *    values of 0xffffffff and 0x0, respectively.
+ *
+ * EYESPI Breakout Learn Guide:
+ * - https://learn.adafruit.com/adafruit-eyespi-breakout-board
+ *
+ * Devicetree docs about #gpio-cells, gpio-map-mask, etc.:
+ * - https://docs.zephyrproject.org/latest/hardware/porting/shields.html#gpio-nexus-nodes
+ * - https://github.com/devicetree-org/devicetree-specification/blob/v0.4/source/chapter2-devicetree-basics.rst#nexus-nodes-and-specifier-mapping
+ */
+
+
+/ {
+	adafruit_eyespi_mipi: connector {
+		compatible = "adafruit-eyespi-mipi";
+		#gpio-cells = <1>;
+		/* gpio-map-mask default, 0xffffffff, is fine */
+		/* gpio-map-pass-thru default, 0x0, is fine */
+		gpio-map =
+			/*  0 */                        /* Vin   */
+			/*  1 */                        /* Lite  */
+			/*  2 */                        /* Gnd   */
+			<   3   &feather_header  6 0>,  /* SCK   = feather SCK  */
+			<   4   &feather_header  7 0>,  /* MOSI  = feather MOSI */
+			<   5   &feather_header  8 0>,  /* MISO  = feather MISO */
+			<   6   &feather_header 15 0>,  /* DC    = feather D6   */
+			<   7   &feather_header 16 0>,  /* RST   = feather D9   */
+			<   8   &feather_header 14 0>;  /* TCS   = feather D5   */
+			/*  9 */                        /* SDCS  */
+			/* 10 */                        /* MEMCS */
+			/* 11 */                        /* TSCS  */
+			/* 12 */                        /* SCL   */
+			/* 13 */                        /* SDA   */
+			/* 14 */                        /* INT   */
+			/* 15 */                        /* BUSY  */
+			/* 16 */                        /* GP1   */
+			/* 17 */                        /* GP2   */
+	};
+};
+
+eyespi_spi: &feather_spi {};
