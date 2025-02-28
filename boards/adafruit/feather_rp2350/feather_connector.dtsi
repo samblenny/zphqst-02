@@ -13,8 +13,12 @@
  * board.IO4, and board.IO7. The SDA and SCL pins for the feather header and QT
  * I2C port are on the same nets.
  *
- * I'm not sure what #gpio-cells means or where it's documented, so I just
- * copied the value for the nrf52. It might be wrong.
+ * The *gpio-cells, gpio-map-mask, and gpio-map-pass-thru values are
+ * boilerplate that allow Zephyr GPIO pin mode information to be passed around
+ * in the low bits of the pin selectors. In this case, the second cell of all
+ * the gpio-map selectors is "0", but stuff like "GPIO_ACTIVE_LOW" is also a
+ * possibility. See:
+ * https://docs.zephyrproject.org/latest/hardware/porting/shields.html#gpio-nexus-nodes
  */
 
 / {
