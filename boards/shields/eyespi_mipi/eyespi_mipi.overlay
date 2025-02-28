@@ -27,8 +27,8 @@
 
 
 / {
-	adafruit_eyespi_mipi: connector {
-		compatible = "adafruit-eyespi-mipi";
+	eyespi_mipi: connector {
+		compatible = "eyespi-mipi";
 		#gpio-cells = <2>;
 		gpio-map-mask = <0xffffffff 0xffffffc0>;
 		gpio-map-pass-thru = <0 0x3f>;
