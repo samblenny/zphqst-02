@@ -19,6 +19,8 @@
 &eyespi_spi {
 	/* Board def probably has wrong cs-gpios, so set it properly */
 	cs-gpios = <&eyespi_mipi 8 GPIO_ACTIVE_LOW>;
+	/* Datasheet: min serial clock write cycle is 66 ns (15.15 MHz) */
+	clock-frequency = <1000000>; /* 1 MHz */
 };
 
 / {
@@ -31,7 +33,7 @@
 
 		/* Configure spi device with DC and reset pins */
 		spi-dev = <&eyespi_spi>;
-		dc-gpios = <&eyespi_mipi 6 GPIO_ACTIVE_LOW>;
+		dc-gpios = <&eyespi_mipi 6 GPIO_ACTIVE_HIGH>;
 		reset-gpios = <&eyespi_mipi 7 GPIO_ACTIVE_LOW>;
 		write-only;
 
@@ -41,18 +43,18 @@
 		st7789v_adafruit_2in_tft_ips_display: st7789v@0 {
 			compatible = "sitronix,st7789v";
 			reg = <0>;
-			mipi-max-frequency = <24000000>;
+			mipi-max-frequency = <1000000>; /* 1 MHz */
 			mipi-mode = "MIPI_DBI_MODE_SPI_4WIRE";
 			x-offset = <0>;
 			y-offset = <0>;
-			height = <240>;
-			width  = <320>;
+			height = <320>;  /* Y range is 0..319 */
+			width  = <240>;  /* X range is 0..239 */
 
 			/* These values copied from CircuitPython init sequence */
-			colmod   = <0x55>;
+			colmod   = <0x55>;  /* 16-bit 5-6-5 */
 			mdac     = <0x0C>;
 
-			/* These are all default values from the ST7789V datasheet */
+			/* Set required properties to defaults from ST7789V datasheet */
 			vcom     = <0x20>;
 			gctrl    = <0x35>;
 			lcm      = <0x2C>;

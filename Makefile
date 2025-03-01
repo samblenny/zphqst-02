@@ -20,6 +20,28 @@ shell:
 		../zephyr/samples/subsys/shell/shell_module/ \
 		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
 
+# Build Zephyr shell for display using character framebuffer
+# This (cfb init from shell prompt) doesn't work because of an error:
+# "Failed to set required pixel format: -134"
+# When I turn on Debug logging, it says:
+# "<err> display_st7789v: Pixel format change not implemented
+cfb_shell:
+	west build -b feather_rp2350/rp2350a/m33         \
+		--shield eyespi_mipi                         \
+		--shield adafruit_2in_tft_ips_display        \
+		../zephyr/samples/subsys/display/cfb_shell   \
+		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
+
+# Build the "display" sample that draws a white background with red, green,
+# blue and gray boxes in the corners. The gray box animates in a cycle of
+# fading gray from black to white.
+display:
+	west build -b feather_rp2350/rp2350a/m33         \
+		--shield eyespi_mipi                         \
+		--shield adafruit_2in_tft_ips_display        \
+		../zephyr/samples/drivers/display            \
+		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
+
 # Interactively modify config from previous build
 menuconfig:
 	west build -t menuconfig

@@ -10,22 +10,28 @@ Plan:
 1. [x] 3d printed stand for breadboard and display
 2. [x] CircuitPython demo code to test display wiring
 3. [x] Devicetree overlay for Feather header to EYESPI MIPI pin mapping
-4. [ ] Devicetree overlay for MIPI ST7789V display shield with EYESPI pins
-5. [ ] Some kind of Zephyr demo to demonstrate using the display
+4. [x] Devicetree overlay for MIPI ST7789V display shield with EYESPI pins
+5. [x] Some kind of Zephyr demo to demonstrate using the display
 6. [x] Fritzing diagram
 7. [ ] Photos
 
 
-## Board & shield folder name conventions
+## Build & Run the Zephyr Display Sample
 
-When possible, folder names in this repo for boards and shields are based on
-folder names from
-[Adafruit\_CAD\_Parts](https://github.com/adafruit/Adafruit_CAD_Parts)
-with the following transformations:
+This is the bash shell command I use to build Zephyr's "display" sample with
+the EYESPI and 2" TFT IPS display shields from this repo. The paths assume
+that you have set up a zephyr workspace in the manner that I describe in my
+Playground guides.
 
-1. Make lowercase
-2. Change spaces to underscores
-3. Add an `adafruit_` prefix for shield folders (but not for boards)
+```
+west build -b feather_rp2350/rp2350a/m33  \
+  --shield eyespi_mipi                    \
+  --shield adafruit_2in_tft_ips_display   \
+  ../zephyr/samples/drivers/display       \
+  -- -DBOARD_ROOT=$(pwd)
+```
+
+For more examples, check out the [Makefile](Makefile).
 
 
 ## Getting OpenOCD for RP2350
