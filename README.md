@@ -3,17 +3,10 @@
 
 # zphqst-02
 
-**WORK IN PROGRESS**
-
-Plan:
-
-1. [x] 3d printed stand for breadboard and display
-2. [x] CircuitPython demo code to test display wiring
-3. [x] Devicetree overlay for Feather header to EYESPI MIPI pin mapping
-4. [x] Devicetree overlay for MIPI ST7789V display shield with EYESPI pins
-5. [x] Some kind of Zephyr demo to demonstrate using the display
-6. [x] Fritzing diagram
-7. [ ] Photos
+This is a companion repo for my 
+[Zephyr Quest: ST7789 Display with Feather RP2350](https://adafruit-playground.com/u/SamBlenny/pages/zephyr-quest-st7789-display-with-feather-rp2350)
+playground guide. The guide explains how to use an Adafruit 2" TFT IPS display
+breakout with a Feather RP2350 dev board.
 
 
 ## Build & Run the Zephyr Display Sample
