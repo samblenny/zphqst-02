@@ -12,9 +12,6 @@
  * - https://docs.circuitpython.org/en/latest/shared-bindings/busdisplay/
  * - https://learn.adafruit.com/2-0-inch-320-x-240-color-ips-tft-display/circuitpython-displayio-quickstart
  *
- * ST7789V Datasheet Notes:
- * - resolution is 240 x 320 (H x V)
- * - color formats: 12-bit (rgb444), 16-bit (rgb565), 18-bit (rgb666)
  */
 
 #include <zephyr/dt-bindings/mipi_dbi/mipi_dbi.h>
@@ -26,8 +23,8 @@
 
 / {
 	chosen {
-		zephyr,display = &st7798v;
-	}
+		zephyr,display = &st7789v_adafruit_2in_tft_ips_display;
+	};
 
 	mipi_dbi {
 		compatible = "zephyr,mipi-dbi-spi";
@@ -41,45 +38,32 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		st7789: st7789@0 {
+		st7789v_adafruit_2in_tft_ips_display: st7789@0 {
 			compatible = "sitronix,st7789v";
 			reg = <0>;
 			mipi-max-frequency = <24000000>;
 			mipi-mode = <MIPI_DBI_MODE_SPI_4WIRE>;
-
-			/*
-			CircuitPython Init sequence transcribed from Saleae capture:
-			0x01 SWRESET [150ms delay] software reset
-			0x11 SLPOUT  [500ms delay] sleep out
-			0x3A COLMOD
-			0x55 (data)  [ 10ms delay] interface pixel format
-			0x36 MADCTL
-			0x08 (data)  [ 10ms delay] memory data access control
-			0x21 INVON   [ 10ms delay] display inversion
-			0x13 NORON   [ 10ms delay] partial off (normal)
-			0x36 MADCTL
-			0xC0 (data)  [ 10ms delay] memory data access control
-			0x29 DISPON  [500ms delay] display on
-			*/
-
 			x-offset = <0>;
 			y-offset = <0>;
 			height = <240>;
 			width  = <320>;
-			vcom     = <>;  /* int */
-			gctrl    = <>;  /* int */
-			mdac     = <>;  /* int */
-			lcm      = <>;  /* int */
-			colmod   = <>;  /* int */
-			gamma    = <>;  /* int */
-			porch-param   = <>;  /* uint8-array */
-			cmd2en-param  = <>;  /* uint8-array */
-			pwctrl1-param = <>;  /* uint8-array */
-			pvgam-param   = <>;  /* uint8-array */
-			nvgam-param   = <>;  /* uint8-array */
-			ram-param     = <>;  /* uint8-array */
-			rgb-param     = <>;  /* uint8-array */
+
+			/* These values copied from CircuitPython init sequence */
+			colmod   = <0x55>;
+			mdac     = <0x0C>;
+
+			/* These are all default values from the ST7789V datasheet */
+			vcom     = <0x20>;
+			gctrl    = <0x35>;
+			lcm      = <0x2C>;
+			gamma    = <0x01>;
+			porch-param   = [0C 0C 00 33 33];
+			cmd2en-param  = [5A 69 02 00];
+			pwctrl1-param = [A4 81];
+			pvgam-param   = [d0 00 02 07 0b 1a 31 54 40 29 12 12 12 17];
+			nvgam-param   = [d0 00 02 07 05 25 2d 44 44 1c 18 16 1c 1d];
+			ram-param     = [00 f0];
+			rgb-param     = [40 02 14];
 		};
 	};
-
 };

@@ -15,7 +15,8 @@ _OPENOCD=-DOPENOCD=../openocd/build/bin/openocd
 # Build Zephyr shell for Feather RP2350 with OpenOCD and Pi Debug Probe.
 shell:
 	west build -b feather_rp2350/rp2350a/m33         \
-		--shield adafruit_feather_eyespi_mipi        \
+		--shield eyespi_mipi                         \
+		--shield adafruit_2in_tft_ips_display        \
 		../zephyr/samples/subsys/shell/shell_module/ \
 		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
 
