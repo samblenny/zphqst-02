@@ -12,6 +12,16 @@
 #_CMAKE_ECHO=-DCMAKE_EXECUTE_PROCESS_COMMAND_ECHO=STDERR
 _OPENOCD=-DOPENOCD=../openocd/build/bin/openocd
 
+# Build the "display" sample that draws a white background with red, green,
+# blue and gray boxes in the corners. The gray box animates in a cycle of
+# fading gray from black to white.
+display:
+	west build -b feather_rp2350/rp2350a/m33         \
+		--shield eyespi_mipi                         \
+		--shield adafruit_2in_tft_ips_display        \
+		../zephyr/samples/drivers/display            \
+		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
+
 # Build Zephyr shell for Feather RP2350 with OpenOCD and Pi Debug Probe.
 shell:
 	west build -b feather_rp2350/rp2350a/m33         \
@@ -30,16 +40,6 @@ cfb_shell:
 		--shield eyespi_mipi                         \
 		--shield adafruit_2in_tft_ips_display        \
 		../zephyr/samples/subsys/display/cfb_shell   \
-		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
-
-# Build the "display" sample that draws a white background with red, green,
-# blue and gray boxes in the corners. The gray box animates in a cycle of
-# fading gray from black to white.
-display:
-	west build -b feather_rp2350/rp2350a/m33         \
-		--shield eyespi_mipi                         \
-		--shield adafruit_2in_tft_ips_display        \
-		../zephyr/samples/drivers/display            \
 		-- -DBOARD_ROOT=$$(pwd) ${_OPENOCD} ${_CMAKE_ECHO}
 
 # Interactively modify config from previous build
@@ -107,4 +107,4 @@ usbtty:
 clean:
 	rm -rf build build-cp
 
-.PHONY: shell menuconfig flash uart dtc gen_edt bundle sync usbtty clean
+.PHONY: display shell cfb_shell menuconfig flash uart dtc gen_edt bundle sync usbtty clean

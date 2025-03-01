@@ -21,7 +21,7 @@ west build -b feather_rp2350/rp2350a/m33  \
   --shield eyespi_mipi                    \
   --shield adafruit_2in_tft_ips_display   \
   ../zephyr/samples/drivers/display       \
-  -- -DBOARD_ROOT=$(pwd)
+  -- -DBOARD_ROOT=$(pwd) -DOPENOCD=../openocd/build/bin/openocd
 ```
 
 For more examples, check out the [Makefile](Makefile).
