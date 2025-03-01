@@ -25,9 +25,8 @@
  * - https://learn.adafruit.com/adafruit-eyespi-breakout-board
  */
 
-
 / {
-	eyespi_mipi: connector {
+	eyespi_mipi: eyespi_connector {
 		compatible = "eyespi-mipi";
 		#gpio-cells = <2>;
 		gpio-map-mask = <0xffffffff 0xffffffc0>;

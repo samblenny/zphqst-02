@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright 2025 Sam Blenny
 
-config SHIELD_ADAFRUIT_2In_TFT_IPS_DISPLAY
+config SHIELD_ADAFRUIT_2IN_TFT_IPS_DISPLAY
 	def_bool $(shields_list_contains,adafruit_2in_tft_ips_display)

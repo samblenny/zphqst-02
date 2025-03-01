@@ -38,11 +38,11 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		st7789v_adafruit_2in_tft_ips_display: st7789@0 {
+		st7789v_adafruit_2in_tft_ips_display: st7789v@0 {
 			compatible = "sitronix,st7789v";
 			reg = <0>;
 			mipi-max-frequency = <24000000>;
-			mipi-mode = <MIPI_DBI_MODE_SPI_4WIRE>;
+			mipi-mode = "MIPI_DBI_MODE_SPI_4WIRE";
 			x-offset = <0>;
 			y-offset = <0>;
 			height = <240>;
